@@ -27,7 +27,8 @@ namespace Restaurants.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RestaurantResponse>>> GetRestaurants()
         {
-            return await _restaurantService.GetRestaurants();
+            var restaurants = await _restaurantService.GetRestaurants();
+            return Ok(restaurants);
         }
 
         /// <summary>
@@ -40,12 +41,12 @@ namespace Restaurants.Controllers
         {
             var restaurant = await _restaurantService.GetRestaurant(id);
 
-            if (restaurant == null)
+            if (restaurant.Value == null)
             {
                 return NotFound();
             }
 
-            return restaurant;
+            return Ok(restaurant);
         }
 
         /// <summary>
@@ -94,7 +95,7 @@ namespace Restaurants.Controllers
                 return NotFound();
             }
 
-            return restaurant;
+            return Ok(restaurant);
         }
     }
 }

@@ -30,7 +30,8 @@ namespace Restaurants.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CityResponse>>> GetCities()
         {
-            return await _cityService.GetCities();
+            var cities = await _cityService.GetCities();
+            return Ok(cities);
         }
 
         /// <summary>
@@ -43,12 +44,12 @@ namespace Restaurants.Controllers
         {
             var city = await _cityService.GetCity(id);
 
-            if (city == null)
+            if (city.Value == null)
             {
                 return NotFound();
             }
 
-            return city;
+            return Ok(city);
         }
 
         /// <summary>
@@ -97,7 +98,7 @@ namespace Restaurants.Controllers
                 return NotFound();
             }
 
-            return city;
+            return Ok(city);
         }
 
         /// <summary>
@@ -108,7 +109,8 @@ namespace Restaurants.Controllers
         [HttpGet("{id}/restaurants")]
         public async Task<ActionResult<IEnumerable<RestaurantResponse>>> GetRestaurantsForCity(int id)
         {
-            return await _restaurantService.GetRestaurantsForCity(id);
+            var restaurants = await _restaurantService.GetRestaurantsForCity(id);
+            return Ok(restaurants);
         }
     }
 }
